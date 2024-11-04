@@ -22,7 +22,7 @@ export default function HeroLanding() {
           className="max-w-2xl text-balance leading-normal text-muted-foreground sm:text-xl sm:leading-8"
           style={{ animationDelay: "0.35s", animationFillMode: "forwards", lineHeight: "1.5", margin:'1rem' }}
         >
-              Thanks to advancements in AI, our developers can work faster and more efficiently than ever before. We're passing these time savings directly to our clients, offering high-quality web solutions at exceptional value.
+              Thanks to advancements in AI, our developers can work faster and more efficiently than ever before. We&apos;re passing these time savings directly to our clients, offering high-quality web solutions at exceptional value.
         </p>
 
         <div

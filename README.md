@@ -1,15 +1,14 @@
-<a href="https://next-saas-stripe-starter.vercel.app">
-  <img src="public/_static/og.jpg">
+<a href="https://codephy.com">
   <h1 align="center">Codephy Starter</h1>
 </a>
 
 <p align="center">
-  Web Design and Development Started Template
+  Web Design and Development Starter Template
 </p>
 
 <p align="center">
-  <a href="https://twitter.com/miickasmt">
-    <img src="https://img.shields.io/twitter/follow/miickasmt?style=flat&label=miickasmt&logo=twitter&color=0bf&logoColor=fff" alt="Mickasmt Twitter follower count" />
+  <a href="https://github.com/mickasmt/next-saas-stripe-starter">
+    Forked From: mickasmt/next-saas-stripe-starter
   </a>
 </p>
 
