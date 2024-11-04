@@ -103,7 +103,7 @@ export const Icons = {
   home: Home,
   laptop: Laptop,
   lineChart: LineChart,
-  logo: Puzzle,
+  logo: Package,
   media: Image,
   messages: MessagesSquare,
   moon: Moon,
