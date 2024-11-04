@@ -5,9 +5,10 @@ import { constructMetadata } from "@/lib/utils";
 import { DashboardHeader } from "@/components/dashboard/header";
 import InfoCard from "@/components/dashboard/info-card";
 import TransactionsList from "@/components/dashboard/transactions-list";
+import { BUSINESS_NAME } from "@/config/site";
 
 export const metadata = constructMetadata({
-  title: "Admin – SaaS Starter",
+  title: `Admin – ${BUSINESS_NAME}`,
   description: "Admin page for only admin management.",
 });
 

@@ -12,6 +12,7 @@ import "@/styles/mdx.css";
 import { Metadata } from "next";
 
 import { constructMetadata, getBlurDataURL } from "@/lib/utils";
+import { BUSINESS_NAME } from "@/config/site";
 
 interface DocPageProps {
   params: {
@@ -38,7 +39,7 @@ export async function generateMetadata({
   const { title, description } = doc;
 
   return constructMetadata({
-    title: `${title} – SaaS Starter`,
+    title: `${title} – ${BUSINESS_NAME}`,
     description: description,
   });
 }

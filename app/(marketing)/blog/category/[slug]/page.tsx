@@ -5,6 +5,7 @@ import { allPosts } from "contentlayer/generated";
 import { BLOG_CATEGORIES } from "@/config/blog";
 import { constructMetadata, getBlurDataURL } from "@/lib/utils";
 import { BlogCard } from "@/components/content/blog-card";
+import { BUSINESS_NAME } from "@/config/site";
 
 export async function generateStaticParams() {
   return BLOG_CATEGORIES.map((category) => ({
@@ -27,7 +28,7 @@ export async function generateMetadata({
   const { title, description } = category;
 
   return constructMetadata({
-    title: `${title} Posts – Next SaaS Starter`,
+    title: `${title} Posts – ${BUSINESS_NAME}`,
     description,
   });
 }

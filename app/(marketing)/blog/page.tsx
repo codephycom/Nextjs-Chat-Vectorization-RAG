@@ -2,10 +2,11 @@ import { allPosts } from "contentlayer/generated";
 
 import { constructMetadata, getBlurDataURL } from "@/lib/utils";
 import { BlogPosts } from "@/components/content/blog-posts";
+import { BUSINESS_NAME } from "@/config/site";
 
 export const metadata = constructMetadata({
-  title: "Blog – SaaS Starter",
-  description: "Latest news and updates from Next SaaS Starter.",
+  title: `Blog – ${BUSINESS_NAME}`,
+  description: `Latest news and updates from ${BUSINESS_NAME}.`,
 });
 
 export default async function BlogPage() {

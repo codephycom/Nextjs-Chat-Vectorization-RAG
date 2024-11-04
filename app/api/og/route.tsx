@@ -1,6 +1,7 @@
 import { ImageResponse } from "@vercel/og"
 
 import { ogImageSchema } from "@/lib/validations/og"
+import { BUSINESS_NAME } from "@/config/site"
 
 export const runtime = "edge"
 
@@ -55,7 +56,7 @@ export async function GET(req: Request) {
               color: 'transparent'
             }}
           >
-            SaaS Starter
+            {BUSINESS_NAME}
           </div>
 
           <div tw="flex flex-col flex-1 py-16">

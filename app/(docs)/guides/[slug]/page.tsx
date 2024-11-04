@@ -15,6 +15,7 @@ import { Metadata } from "next";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 import { buttonVariants } from "@/components/ui/button";
 import { cn, constructMetadata } from "@/lib/utils";
+import { BUSINESS_NAME } from "@/config/site";
 
 export async function generateStaticParams() {
   return allGuides.map((guide) => ({
@@ -35,7 +36,7 @@ export async function generateMetadata({
   const { title, description } = guide;
 
   return constructMetadata({
-    title: `${title} – SaaS Starter`,
+    title: `${title} – ${BUSINESS_NAME}`,
     description: description,
   });
 }

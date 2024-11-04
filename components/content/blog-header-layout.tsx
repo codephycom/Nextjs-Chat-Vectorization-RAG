@@ -9,6 +9,7 @@ import { Drawer } from "vaul";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 import { BLOG_CATEGORIES } from "@/config/blog";
 import { cn } from "@/lib/utils";
+import { BUSINESS_NAME } from "@/config/site";
 
 export function BlogHeaderLayout() {
   const [open, setOpen] = useState(false);
@@ -28,7 +29,7 @@ export function BlogHeaderLayout() {
           </h1>
           <p className="mt-3.5 text-base text-muted-foreground md:text-lg">
             {data?.description ||
-              "Latest news and updates from Next SaaS Starter."}
+              `Latest news and updates from ${BUSINESS_NAME}.`}
           </p>
         </div>
 

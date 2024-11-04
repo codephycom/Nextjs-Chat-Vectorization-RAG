@@ -205,7 +205,7 @@ export function MobileSheetSidebar({ links }: DashboardSidebarProps) {
                   className="flex items-center gap-2 text-lg font-semibold"
                 >
                   <Icons.logo className="size-6" />
-                  <span className="font-urban text-xl font-bold">
+                  <span className="font-balance text-xl font-bold">
                     {siteConfig.name}
                   </span>
                 </Link>

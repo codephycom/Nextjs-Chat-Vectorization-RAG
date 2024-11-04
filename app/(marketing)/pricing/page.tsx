@@ -7,9 +7,10 @@ import { constructMetadata } from "@/lib/utils";
 import { ComparePlans } from "@/components/pricing/compare-plans";
 import { PricingCards } from "@/components/pricing/pricing-cards";
 import { PricingFaq } from "@/components/pricing/pricing-faq";
+import { BUSINESS_NAME } from "@/config/site";
 
 export const metadata = constructMetadata({
-  title: "Pricing – SaaS Starter",
+  title: `Pricing – ${BUSINESS_NAME}`,
   description: "Explore our subscription plans.",
 });
 

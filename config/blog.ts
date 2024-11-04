@@ -1,3 +1,5 @@
+import { BUSINESS_NAME } from "./site";
+
 export const BLOG_CATEGORIES: {
   title: string;
   slug: "news" | "education";
@@ -6,7 +8,7 @@ export const BLOG_CATEGORIES: {
   {
     title: "News",
     slug: "news",
-    description: "Updates and announcements from Next SaaS Starter.",
+    description: `Updates and announcements from ${BUSINESS_NAME}.`,
   },
   {
     title: "Education",

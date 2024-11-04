@@ -11,8 +11,10 @@ import { RadialStackedChart } from "@/components/charts/radial-stacked-chart";
 import { RadialTextChart } from "@/components/charts/radial-text-chart";
 import { DashboardHeader } from "@/components/dashboard/header";
 
+import { BUSINESS_NAME } from "@/config/site";
+
 export const metadata = constructMetadata({
-  title: "Charts – SaaS Starter",
+  title: `Charts – ${BUSINESS_NAME}`,
   description: "List of charts by shadcn-ui",
 });
 

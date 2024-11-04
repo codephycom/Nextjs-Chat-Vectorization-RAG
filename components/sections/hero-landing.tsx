@@ -1,25 +1,26 @@
- // Start of Selection
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/shared/icons";
 
+import { BUSINESS_NAME } from "config/site";
+
 export default function HeroLanding() {
   return (
-    <section className="space-y-6 py-12 sm:py-20 lg:py-20">
-      <div className="container flex max-w-5xl flex-col items-center gap-5 text-center">
-        <h1 className="text-balance font-urban text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-[66px]">
-          Codephy Starter
+    <section className="container flex flex-col gap-4 pb-8 pt-6 md:pt-10">
+      <div className="mx-auto flex max-w-[980px] flex-col items-center gap-3 text-center">
+        <h1 className="text-3xl font-bold leading-tight tracking-tighter md:text-5xl lg:leading-[1.1]">
+          Welcome to {BUSINESS_NAME}
         </h1>
 
-        <h2 className="text-balance font-urban text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl lg:text-5xl">
+        <h2 className="text-gradient_indigo-purple text-balance font-urban text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl lg:text-5xl">
           Maximizing AI for Unmatched Cost Savings
         </h2>
 
         <p
           className="max-w-2xl text-balance leading-normal text-muted-foreground sm:text-xl sm:leading-8"
-          style={{ animationDelay: "0.35s", animationFillMode: "forwards" }}
+          style={{ animationDelay: "0.35s", animationFillMode: "forwards", lineHeight: "1.5", margin:'1rem' }}
         >
               Thanks to advancements in AI, our developers can work faster and more efficiently than ever before. We're passing these time savings directly to our clients, offering high-quality web solutions at exceptional value.
         </p>

@@ -6,9 +6,10 @@ import { DeleteAccountSection } from "@/components/dashboard/delete-account";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { UserNameForm } from "@/components/forms/user-name-form";
 import { UserRoleForm } from "@/components/forms/user-role-form";
+import { BUSINESS_NAME } from "@/config/site";
 
 export const metadata = constructMetadata({
-  title: "Settings – SaaS Starter",
+  title: `Settings – ${BUSINESS_NAME}`,
   description: "Configure your account and website settings.",
 });
 

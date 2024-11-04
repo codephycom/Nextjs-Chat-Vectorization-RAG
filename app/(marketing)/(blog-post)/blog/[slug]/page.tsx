@@ -22,6 +22,7 @@ import Author from "@/components/content/author";
 import BlurImage from "@/components/shared/blur-image";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 import { DashboardTableOfContents } from "@/components/shared/toc";
+import { BUSINESS_NAME } from "@/config/site";
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({
@@ -42,7 +43,7 @@ export async function generateMetadata({
   const { title, description, image } = post;
 
   return constructMetadata({
-    title: `${title} – SaaS Starter`,
+    title: `${title} – ${BUSINESS_NAME}`,
     description: description,
     image,
   });

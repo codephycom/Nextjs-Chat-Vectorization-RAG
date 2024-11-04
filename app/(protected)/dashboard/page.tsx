@@ -3,9 +3,10 @@ import { constructMetadata } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
+import { BUSINESS_NAME } from "@/config/site";
 
 export const metadata = constructMetadata({
-  title: "Dashboard – SaaS Starter",
+  title: `Dashboard – ${BUSINESS_NAME}`,
   description: "Create and manage content.",
 });
 
