@@ -13,10 +13,9 @@ export const siteConfig: SiteConfig = {
   url: site_url,
   ogImage: `${site_url}/_static/og.jpg`,
   links: {
-    twitter: "https://twitter.com/miickasmt",
-    github: "https://github.com/mickasmt/next-saas-stripe-starter",
+    github: "https://github.com/codephycom/Next-Agency-Website",
   },
-  mailSupport: "support@saas-starter.com",
+  mailSupport: "support@codephy.com",
 };
 
 export const footerLinks: SidebarNavItem[] = [

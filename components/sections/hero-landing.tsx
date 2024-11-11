@@ -5,6 +5,9 @@ import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { BUSINESS_NAME, BUSINESS_NAME_SHORT } from '@/config/site'
 import { Icons } from '../shared/icons'
+import Link from 'next/link'
+import { cn } from '@/lib/utils'
+import { buttonVariants } from '../ui/button'
 
 const navigation = [
   { name: 'Product', href: '#' },
@@ -117,15 +120,30 @@ export default function HeroLanding() {
         <div className="py-24 sm:py-32 lg:pb-40">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
-              <div className="">
-                <a href="#" className="inline-flex space-x-6">
-                  {['Next.js', 'Tailwind', 'Typescript'].map((item)=> <span className="rounded-full bg-indigo-600/10 px-3 py-1 text-sm/6 font-semibold text-indigo-600 ring-1 ring-inset ring-indigo-600/10">
+
+              <Link
+                href="https://twitter.com/miickasmt/status/1810465801649938857"
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "sm", rounded: "full" }),
+                  "px-4",
+                )}
+                target="_blank"
+              >
+                <span className="mr-3">🎉</span>
+                <span className="hidden md:flex">A Next JS Starter with Chat, Dashboard, Auth, Database, Payments, Subscription</span>
+
+              </Link>
+
+              <div className="mt-4">
+                <a href="#" className="inline-flex flex-wrap space-x-6" style={{gap:'0.5rem', justifyContent:'center'}} >
+                  {['Next.js', 'Reactjs', 'Tailwind', 'Typescript', 'Chat with RAG', 'Stripe', 
+                    'Pinecone', 'Firebase Auth', 'Firestore', 'Shadcn/UI' ].map((item)=> <span className="rounded-full bg-indigo-600/10 px-3 py-1 text-sm/6 font-semibold text-indigo-600 ring-1 ring-inset ring-indigo-600/10">
                     {item}
                   </span>)}
                   
-                  <span className="inline-flex items-center space-x-2 text-sm/6 font-medium text-gray-600">
+                  {/* <span className="inline-flex items-center space-x-2 text-sm/6 font-medium text-gray-600">
                     <span>More →</span>
-                  </span>
+                  </span> */}
                 </a>
               </div>
               <h1 className="mt-7 text-balance text-5xl font-extrabold tracking-tight text-gray-900 sm:text-7xl">
@@ -143,7 +161,7 @@ export default function HeroLanding() {
                   href="/pricing"
                   className="flex items-center rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   style={{minWidth:'30%'}} >
-                  <Icons.bookOpen className="ml-2 h-5 w-5" style={{marginRight:'1rem'}} />
+                  <Icons.bookOpen className="ml-2 h-5 w-5" style={{marginRight:'1rem', justifyContent:'center'}} />
                   Pricing
                 </a>
                 <a href="https://github.com/codephycom/Next-Agency-Website" className="text-sm/6 font-semibold text-gray-900" 
