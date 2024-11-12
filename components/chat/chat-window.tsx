@@ -88,12 +88,10 @@
           await addDoc(collection(db, 'chats'), userMessage)
           setMessage('')
 
-          // Then create embedding
-          const { data: embeddingData } = await createEmbedding({ text: message })
-            .catch(error => {
-              console.error('Embedding creation failed:', error)
-              throw new Error('Failed to process message')
-            })
+          // Create embedding using the callable function
+          const embeddingResult = await createEmbedding({ text: message })
+          console.log('embeddingResult', embeddingResult)
+          const embeddingId = embeddingResult.data.id
 
           // Update the message with embedding ID
           await addDoc(collection(db, 'chats'), {
@@ -101,22 +99,22 @@
             isUser: true,
             timestamp: serverTimestamp(),
             sessionId,
-            embeddingId: (embeddingData as { id: string }).id // Assert the type of embeddingData
+            embeddingId
           })
-    
           // Simulate AI response
           setTimeout(async () => {
             const aiResponse = "Thanks for your message! This is a demo response."
             
             // Create embedding for AI response
-            const { data: aiEmbeddingData } = await createEmbedding({ text: aiResponse })
-    
+            const aiEmbeddingResult = await createEmbedding({ text: aiResponse })
+            const aiEmbeddingId = aiEmbeddingResult.data.id
+
             await addDoc(collection(db, 'chats'), {
               content: aiResponse,
               isUser: false,
               timestamp: serverTimestamp(),
               sessionId,
-              embeddingId: (aiEmbeddingData as { id: string }).id
+              embeddingId: aiEmbeddingId
             })
           }, 1000)
         } catch (error) {

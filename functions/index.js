@@ -1,118 +1,67 @@
 // index.js
 
-
-
-
 // index.js
 
 const functions = require('firebase-functions');
-const { Pinecone } = require('@pinecone-database/pinecone');
-const OpenAI = require('openai');
 const dotenv = require('dotenv');
-const cors = require('cors')({ origin: true });
+const tf = require('@tensorflow/tfjs-node'); // Add TensorFlow.js for Node.js
+const use = require('@tensorflow-models/universal-sentence-encoder');
 
-// Load environment variables
-dotenv.config();
-
-
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY
-});
+const { Pinecone } = require('@pinecone-database/pinecone');
 
 // Initialize Pinecone client
-const pinecone = new Pinecone({ apiKey: process.env.PINECONE_API_KEY });
+// Load environment variables for local development
+dotenv.config();
 
-// Cloud Function using callable HTTPS trigger
-exports.createEmbedding = functions.https.onCall(async (data, context) => {
-  try {
-    if (!data.text || typeof data.text !== 'string') {
-      throw new functions.https.HttpsError(
-        'invalid-argument',
-        'The function must be called with a "text" argument of type string.'
-      );
-    }
+// Get environment variables
+const PINECONE_API_KEY = functions.config?.()?.pinecone?.apikey || process.env.PINECONE_API_KEY;
+const PINECONE_ENVIRONMENT = functions.config?.()?.pinecone?.environment || process.env.PINECONE_ENVIRONMENT;
+const PINECONE_INDEX = functions.config?.()?.pinecone?.index || process.env.PINECONE_INDEX;
 
-    // Create embedding using OpenAI
-    const embeddingResponse = await openai.createEmbedding({
-      model: 'text-embedding-ada-002',
-      input: data.text,
-    });
+// Initialize Pinecone client
+const pinecone        = new Pinecone({ apiKey: PINECONE_API_KEY });
 
-    const embedding = embeddingResponse.data.data[0].embedding;
 
-    // Generate a unique ID for the vector
-    const vectorId = `${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
+// Cache the model loading promise
+let modelPromise;
+async function loadModel() {
+    if (!modelPromise) modelPromise = use.load();
+    return modelPromise;
+}
 
-    // Prepare the record for upsert
-    const record = {
-      id: vectorId,
-      values: embedding,
-      metadata: {
-        text: data.text,
-        timestamp: new Date().toISOString(),
-      },
-    };
 
-    // Target the index where you'll store the vector embeddings
-    const index = pinecone.index(process.env.PINECONE_INDEX);
+function getUniqueId() {
+    return `${Date.now()}-${Math.random().toString(36).substring(2, 11)}`
+}
 
-    // Upsert the vector to Pinecone
-    await index.upsert([record]);
-
-    return { id: vectorId };
-  } catch (error) {
-    console.error('Error creating embedding:', error);
-    throw new functions.https.HttpsError('internal', 'Error creating embedding');
-  }
-});
-
-// HTTP endpoint with CORS
-exports.createEmbeddingHttp = functions.https.onRequest((req, res) => {
-  cors(req, res, async () => {
-    if (req.method !== 'POST') {
-      return res.status(405).json({ error: 'Method not allowed. Use POST.' });
-    }
-
-    const { text } = req.body;
-
-    if (!text || typeof text !== 'string') {
-      return res
-        .status(400)
-        .json({ error: 'Invalid request. "text" field is required and must be a string.' });
-    }
-
+// Callable version
+exports.createEmbedding = functions.runWith({ memory: '1GB' }).https.onCall(async (data, context) => {
     try {
-      // Create embedding using OpenAI
-      const embeddingResponse = await openai.createEmbedding({
-        model: 'text-embedding-ada-002',
-        input: text,
-      });
+        const text              = data.text;
+        
+        // CREATE EMBEDDING
+        const model             = await loadModel()
+        const embeddings        = await model.embed([text])
+        const embeddingArray    = embeddings.arraySync()[0]
 
-      const embedding = embeddingResponse.data.data[0].embedding;
+        // UPLOAD TO PINECONE
+        const pcIndex           = pinecone.index(PINECONE_INDEX)
+        const id                = getUniqueId()
+        const record            = {
+            id,
+            values:     embeddingArray,
+            metadata:   { text }
+        }
+        pcIndex.namespace('namespace1').upsert([ record ]);
 
-      // Generate a unique ID for the vector
-      const vectorId = `${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
-
-      // Prepare the record for upsert
-      const record = {
-        id: vectorId,
-        values: embedding,
-        metadata: {
-          text: text,
-          timestamp: new Date().toISOString(),
-        },
-      };
-
-      // Target the index where you'll store the vector embeddings
-      const index = pinecone.index(process.env.PINECONE_INDEX);
-
-      // Upsert the vector to Pinecone
-      await index.upsert([record]);
-
-      return res.status(200).json({ id: vectorId });
-    } catch (error) {
-      console.error('Error creating embedding:', error);
-      return res.status(500).json({ error: 'Internal Server Error' });
+        // RETURN
+        console.log('returning', { embeddingArray, id })
+        return { embeddingArray, id };
+    } 
+    catch (error) {
+        console.error('Error in createEmbedding:', error);
+        return { error: error.message };
     }
-  });
 });
+
+// Keep your existing createEmbedding2 HTTP endpoint if needed
