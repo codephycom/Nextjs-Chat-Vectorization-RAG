@@ -144,7 +144,7 @@ export default function HeroLanding() {
 
               <div className="mt-4">
                 <a href="#" className="inline-flex flex-wrap space-x-6" style={{gap:'0.5rem', justifyContent:'center'}} >
-                  {['Next.js', 'Reactjs', 'Tailwind', 'Typescript', 'Chat with RAG', 'Stripe', 
+                  {['Next.js', 'Reactjs', 'Tailwind', 'Typescript', 'TensorFlow', 'Chat with RAG', 'Stripe', 
                     'Pinecone', 'Firebase Auth', 'Firestore', 'Shadcn/UI' ].map((item)=> <span className="rounded-full bg-indigo-600/10 px-3 py-1 text-sm/6 font-semibold text-indigo-600 ring-1 ring-inset ring-indigo-600/10">
                     {item}
                   </span>)}
@@ -165,7 +165,7 @@ export default function HeroLanding() {
               </h2>
                 <p className="mt-5 text-xl font-urban font-bold text-gray-800 leading-relaxed" style={{fontWeight:500}}>
                   {/* By harnessing the latest advancements in AI, web development is 100x more efficient. At {BUSINESS_NAME}, these translate into unmatched cost savings for you.</p> */}
-                  A NextJS Retrieval Augmented Generation Chat Demo with Native Vectorization
+                  A NextJS Retrieval Augmented Generation Chat Demo with TensorFlow Vectorization 
               </p>
 
               <div className="mt-10 flex items-center justify-center gap-x-6">
@@ -215,7 +215,7 @@ export default function HeroLanding() {
       >
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div className="fixed inset-0 flex items-center justify-center p-4">
-          <ChatDialog.Panel className="mx-auto max-w-3xl rounded-xl bg-white w-full h-[80vh]" >
+          <ChatDialog.Panel className="mx-auto max-w-3xl rounded-xl bg-white w-full h-[80vh]" style={{borderRadius:'1rem', overflow:'hidden'}} >
             <ChatWindow onClose={() => setIsChatOpen(false)} />
           </ChatDialog.Panel>
         </div>

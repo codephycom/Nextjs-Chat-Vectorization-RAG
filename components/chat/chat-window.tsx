@@ -130,10 +130,10 @@
       }
     
       return (
-        <div className="h-full flex flex-col bg-gray-50">
+        <div className="font-urban h-full flex flex-col bg-gray-50">
           {/* Header */}
-          <div className="flex justify-between items-center p-4 border-b bg-white">
-            <h2 className="text-lg font-semibold text-gray-800">Chat Assistant</h2>
+          <div className="flex justify-between items-center p-4 border-b bg-white" style={{padding:'0.5rem 1rem' }}>
+            <h2 className="text-lg font-semibold text-gray-800">Chat</h2>
             <button
               onClick={onClose}
               className="rounded-full p-2 hover:bg-gray-100 transition-colors"
@@ -171,7 +171,7 @@
           </div>
     
           {/* Input Area */}
-          <form onSubmit={handleSubmit} className="p-4 bg-white border-t">
+          <form onSubmit={handleSubmit} className="p-4">
             <div className="flex items-center gap-2">
               <input
                 type="text"
@@ -179,10 +179,12 @@
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Type your message..."
                 className="flex-1 rounded-full border border-gray-300 px-4 py-2 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                style={{borderRadius:10 }}
               />
               <button
                 type="submit"
                 className="rounded-full bg-indigo-600 p-2 text-white hover:bg-indigo-700 transition-colors"
+                style={{borderRadius:10 }}
               >
                 <PaperAirplaneIcon className="h-5 w-5" />
               </button>
