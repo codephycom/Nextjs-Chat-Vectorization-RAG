@@ -1,5 +1,4 @@
 import { initializeApp } from 'firebase/app';
-import { getFunctions, connectFunctionsEmulator } from 'firebase/functions';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -10,10 +9,4 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-const app = initializeApp(firebaseConfig);
-export const functions = getFunctions(app);
-
-// Connect to the emulator when running locally
-if (process.env.NODE_ENV === 'development') {
-  connectFunctionsEmulator(functions, 'localhost', 5001);
-} 
+export const app = initializeApp(firebaseConfig); 
