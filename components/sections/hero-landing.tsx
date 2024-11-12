@@ -151,20 +151,24 @@ export default function HeroLanding() {
                 {" "}
                 <span className="text-gradient_indigo-purple text-indigo-600">Starter</span>
               </h1>
-              <h2 className="mt-5 text-gradient_indigo-purple text-balance font-urban text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl lg:text-5xl" >
-                Maximizing AI for Unmatched Cost Savings
+              <h2 className="mt-5 text-gradient_indigo-purple text-balance font-urban text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl lg:text-5xl" style={{paddingBottom:'1rem'}} >
+                {/* Maximizing AI for Unmatched Cost Savings */}
+                Next.js Chat
               </h2>
                 <p className="mt-5 text-xl font-urban font-bold text-gray-800 leading-relaxed" style={{fontWeight:500}}>
-                  By harnessing the latest advancements in AI, web development is 100x more efficient. At {BUSINESS_NAME}, these translate into unmatched cost savings for you.</p>
+                  {/* By harnessing the latest advancements in AI, web development is 100x more efficient. At {BUSINESS_NAME}, these translate into unmatched cost savings for you.</p> */}
+                  A NextJS Retrieval Augmented Generation Chat Demo with Native Vectorization
+              </p>
+
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <a
-                  href="/pricing"
+                  href="/chat"
                   className="flex items-center rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  style={{minWidth:'30%'}} >
-                  <Icons.bookOpen className="ml-2 h-5 w-5" style={{marginRight:'1rem', justifyContent:'center'}} />
-                  Pricing
+                  style={{minWidth:'30%', justifyContent:'center'}} >
+                  {/* <Icons.bookOpen className="ml-2 h-5 w-5" style={{marginRight:'1rem', justifyContent:'center'}} /> */}
+                  Chat
                 </a>
-                <a href="https://github.com/codephycom/Next-Agency-Website" className="text-sm/6 font-semibold text-gray-900" 
+                <a href="https://github.com/codephycom/Nextjs-Chat-Vectorization-RAG" className="text-sm/6 font-semibold text-gray-900" 
                 style={{minWidth:'30%'}} >
                   View On Github <span aria-hidden="true">→</span>
                 </a>

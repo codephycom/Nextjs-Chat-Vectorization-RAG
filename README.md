@@ -1,5 +1,6 @@
 # Codephy Starter
 
+<a href="https://codephy.com">DEMO</a>
 <p >A NextJS Retrieval Augmented Generation Chat Demo with Native Vectorization</p>
 <p >Modules include: Chat, Dashboard, Auth, Database, Payments, Subscription</p>
 
