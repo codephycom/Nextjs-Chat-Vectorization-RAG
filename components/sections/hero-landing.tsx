@@ -8,6 +8,8 @@ import { Icons } from '../shared/icons'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '../ui/button'
+import { Dialog as ChatDialog } from '@headlessui/react'
+import dynamic from 'next/dynamic'
 
 const navigation = [
   { name: 'Product', href: '#' },
@@ -16,8 +18,14 @@ const navigation = [
   { name: 'Company', href: '#' },
 ]
 
+const ChatWindow = dynamic(() => import('../chat/chat-window'), { 
+  loading: () => <p>Loading...</p>,
+  ssr: false 
+})
+
 export default function HeroLanding() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isChatOpen, setIsChatOpen] = useState(false)
 
   return (
     <div className="bg-white">
@@ -161,13 +169,13 @@ export default function HeroLanding() {
               </p>
 
               <div className="mt-10 flex items-center justify-center gap-x-6">
-                <a
-                  href="/chat"
+                <button
+                  onClick={() => setIsChatOpen(true)}
                   className="flex items-center rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  style={{minWidth:'30%', justifyContent:'center'}} >
-                  {/* <Icons.bookOpen className="ml-2 h-5 w-5" style={{marginRight:'1rem', justifyContent:'center'}} /> */}
+                  style={{minWidth:'30%', justifyContent:'center'}}
+                >
                   Chat
-                </a>
+                </button>
                 <a href="https://github.com/codephycom/Nextjs-Chat-Vectorization-RAG" className="text-sm/6 font-semibold text-gray-900" 
                 style={{minWidth:'30%'}} >
                   View On Github <span aria-hidden="true">→</span>
@@ -200,6 +208,18 @@ export default function HeroLanding() {
           />
         </div>
       </div>
+      <ChatDialog
+        open={isChatOpen}
+        onClose={() => setIsChatOpen(false)}
+        className="relative z-50"
+      >
+        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+        <div className="fixed inset-0 flex items-center justify-center p-4">
+          <ChatDialog.Panel className="mx-auto max-w-3xl rounded-xl bg-white p-4 w-full h-[80vh]">
+            <ChatWindow onClose={() => setIsChatOpen(false)} />
+          </ChatDialog.Panel>
+        </div>
+      </ChatDialog>
     </div>
   )
 }
