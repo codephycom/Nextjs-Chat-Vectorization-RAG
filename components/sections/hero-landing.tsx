@@ -215,7 +215,7 @@ export default function HeroLanding() {
       >
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div className="fixed inset-0 flex items-center justify-center p-4">
-          <ChatDialog.Panel className="mx-auto max-w-3xl rounded-xl bg-white p-4 w-full h-[80vh]">
+          <ChatDialog.Panel className="mx-auto max-w-3xl rounded-xl bg-white w-full h-[80vh]" >
             <ChatWindow onClose={() => setIsChatOpen(false)} />
           </ChatDialog.Panel>
         </div>
