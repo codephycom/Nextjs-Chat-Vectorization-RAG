@@ -65,7 +65,9 @@ async function generateAiResponse({ context, question }) {
 
     let systemContext = `You are a helpful assistant. Please generate a response based on the information provided 
     in the following context. If there is no context provided or the content is non-sensical, 
-    respond with "There is not enough content to provide a response." CONTEXT: "${JSON.stringify(context)}". REMEMBER - ONLY ANSWER BASED ON THE INFORMATION CONTEXT PROVIDED.`
+    respond with "There is not enough content to provide a response." CONTEXT: "${JSON.stringify(context)}". REMEMBER - ONLY ANSWER BASED ON THE INFORMATION CONTEXT PROVIDED.
+    TRY TO ANSWER IN A CONCISE MANNER, BUT PROVIDE AS MUCH INFORMATION AS NECESSARY TO ANSWER THE QUESTION CORRECTLY. FIND AN ANSWER IN THE CONTEXT. IF THERE IS NO ANSWER IN THE 
+    CONTEXT, THEN SIMPLY SUMMARISE THE CONTEXT IN A FEW SENTENCES, EXPLAINING WHAT THE CONTEXT IS ABOUT IN A FEW SENTENCES.`
     console.log('content', systemContext, question)
 
     const completion = await openai.chat.completions.create({
