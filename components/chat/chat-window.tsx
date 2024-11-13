@@ -1,9 +1,10 @@
 import { XMarkIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline'
 import { useState, useEffect } from 'react'
 import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from 'firebase/firestore'
-import { createEmbedding, vectorSearch } from '@/lib/firebase-functions'
+import { createEmbedding } from '@/lib/firebase-functions'
 
-const db = getFirestore()
+
+const db        = getFirestore()
 
 interface Message {
     id?: string
@@ -63,7 +64,7 @@ export default function ChatWindow({ onClose }: ChatWindowProps) {
 
         // Add initial AI message
         addDoc(collection(db, 'chats'), {
-            content: "Hi! How can I help you today?",
+            content: "Hi, please give me information to digest. I take about 10 seconds to process each message. Then open an incognito window to ask me about it.",
             isUser: false,
             timestamp: serverTimestamp(),
             sessionId: newSessionId
@@ -71,6 +72,7 @@ export default function ChatWindow({ onClose }: ChatWindowProps) {
 
         return () => unsubscribe()
     }, [])
+    
 
     const handleSubmit = async (e: React.FormEvent) => {
 
@@ -102,21 +104,16 @@ export default function ChatWindow({ onClose }: ChatWindowProps) {
             setIsLoading(false)
 
             // CREATE EMBEDDING AND SAVE TO PINECONE
-            let x = await createEmbedding({ text: message, chatId })
-            console.log('x', x)
+            let aiResponse                        = await createEmbedding({ text: message, chatId })
+            console.log('aiResponse', aiResponse)
 
             // SYSTEM MESSAGE
-            setTimeout(async () => {
-                const aiResponse = "Thanks for your message! This is a demo response."
-
-                await addDoc(collection(db, 'chats'), {
-                    content: aiResponse,
-                    isUser: false,
-                    timestamp: serverTimestamp(),
-                    sessionId                
-                })
-            }, 1000)
-
+            await addDoc(collection(db, 'chats'), {
+                content: aiResponse?.data || 'Sorry, I encountered an error processing your message. Please try again.',
+                isUser: false,
+                timestamp: serverTimestamp(),
+                sessionId                
+            })
 
         } catch (error) {
             console.error('Error processing message:', error)
@@ -146,9 +143,9 @@ export default function ChatWindow({ onClose }: ChatWindowProps) {
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                {messages.map((msg) => (
+                {messages.map((msg,index) => (
                     <div
-                        key={msg.id}
+                        key={index}
                         className={`flex ${msg.isUser ? 'justify-end' : 'justify-start'}`}
                     >
                         <div
