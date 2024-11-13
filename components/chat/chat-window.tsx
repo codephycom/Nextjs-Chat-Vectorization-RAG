@@ -89,7 +89,7 @@
           setMessage('')
 
           // Create embedding using the callable function
-          const embeddingResult = await createEmbedding({ text: message })
+          const embeddingResult: any = await createEmbedding({ text: message })
           console.log('embeddingResult', embeddingResult)
           const embeddingId = embeddingResult.data.id
 
@@ -106,7 +106,7 @@
             const aiResponse = "Thanks for your message! This is a demo response."
             
             // Create embedding for AI response
-            const aiEmbeddingResult = await createEmbedding({ text: aiResponse })
+            const aiEmbeddingResult: any = await createEmbedding({ text: aiResponse })
             const aiEmbeddingId = aiEmbeddingResult.data.id
 
             await addDoc(collection(db, 'chats'), {

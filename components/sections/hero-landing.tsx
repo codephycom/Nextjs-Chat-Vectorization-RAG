@@ -155,13 +155,13 @@ export default function HeroLanding() {
                 </a>
               </div>
               <h1 className="mt-7 text-balance text-5xl font-extrabold tracking-tight text-gray-900 sm:text-7xl">
-                {BUSINESS_NAME_SHORT}
+                NextJS 
                 {" "}
-                <span className="text-gradient_indigo-purple text-indigo-600">Starter</span>
+                <span className="text-gradient_indigo-purple text-indigo-600">Chat</span>
               </h1>
               <h2 className="mt-5 text-gradient_indigo-purple text-balance font-urban text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl lg:text-5xl" style={{paddingBottom:'1rem'}} >
                 {/* Maximizing AI for Unmatched Cost Savings */}
-                Next.js Chat
+                {BUSINESS_NAME_SHORT} Starter
               </h2>
                 <p className="mt-5 text-xl font-urban font-bold text-gray-800 leading-relaxed" style={{fontWeight:500}}>
                   {/* By harnessing the latest advancements in AI, web development is 100x more efficient. At {BUSINESS_NAME}, these translate into unmatched cost savings for you.</p> */}
