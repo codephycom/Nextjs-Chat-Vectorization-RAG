@@ -9,20 +9,22 @@ const use = require('@tensorflow-models/universal-sentence-encoder');
 
 const { Pinecone } = require('@pinecone-database/pinecone');
 
-// Initialize Pinecone client
-// Load environment variables for local development
+
+
+// ENVIRONMENT VARIABLES
 dotenv.config();
 
-// Get environment variables
-const PINECONE_API_KEY = functions.config?.()?.pinecone?.apikey || process.env.PINECONE_API_KEY;
-const PINECONE_ENVIRONMENT = functions.config?.()?.pinecone?.environment || process.env.PINECONE_ENVIRONMENT;
-const PINECONE_INDEX = functions.config?.()?.pinecone?.index || process.env.PINECONE_INDEX;
 
-// Initialize Pinecone client
-const pinecone        = new Pinecone({ apiKey: PINECONE_API_KEY });
+// PINECONE
+const PINECONE_API_KEY          = functions.config?.()?.pinecone?.apikey || process.env.PINECONE_API_KEY;
+const PINECONE_ENVIRONMENT      = functions.config?.()?.pinecone?.environment || process.env.PINECONE_ENVIRONMENT;
+const PINECONE_INDEX            = functions.config?.()?.pinecone?.index || process.env.PINECONE_INDEX;
+const pc                        = new Pinecone({ apiKey: PINECONE_API_KEY });
+const pcIndex   = pc.index(PINECONE_INDEX)
+const model     = 'universal-sentence-encoder'
 
 
-// Cache the model loading promise
+// Universal Sentence Encoder - USE model produces 512-dimensional embeddings - The USE embeddings work well with the cosine similarity metric, matching your index's metric configuration
 let modelPromise;
 async function loadModel() {
     if (!modelPromise) modelPromise = use.load();
@@ -34,34 +36,59 @@ function getUniqueId() {
     return `${Date.now()}-${Math.random().toString(36).substring(2, 11)}`
 }
 
-// Callable version
+async function generateEmbedding(text) {
+    const model             = await loadModel()
+    const embeddings        = await model.embed([text])
+    const embeddingArray    = embeddings.arraySync()[0]
+    return embeddingArray
+}
+
+
 exports.createEmbedding = functions.runWith({ memory: '1GB' }).https.onCall(async (data, context) => {
+    
     try {
-        const text              = data.text;
+        const { text, chatId } = data;
         
-        // CREATE EMBEDDING
-        const model             = await loadModel()
-        const embeddings        = await model.embed([text])
-        const embeddingArray    = embeddings.arraySync()[0]
+        // Start of Selection
+        const embeddings = await generateEmbedding(text);
 
         // UPLOAD TO PINECONE
-        const pcIndex           = pinecone.index(PINECONE_INDEX)
-        const id                = getUniqueId()
         const record            = {
-            id,
-            values:     embeddingArray,
+            id:         chatId,
+            values:     embeddings,
             metadata:   { text }
         }
         pcIndex.namespace('namespace1').upsert([ record ]);
 
         // RETURN
-        console.log('returning', { embeddingArray, id })
-        return { embeddingArray, id };
+        console.log('returning', { chatId:embeddings })
+        return await vectorSearch({ embeddings })
     } 
     catch (error) {
         console.error('Error in createEmbedding:', error);
         return { error: error.message };
     }
-});
+})
 
-// Keep your existing createEmbedding2 HTTP endpoint if needed
+// VECTOR SEARCH
+async function vectorSearch({ embeddings }) {
+
+    try {
+        // Search the index for the three most similar vectors using 
+        const queryResponse = await pcIndex.namespace("namespace1").query({
+            topK: 5,
+            vector: embeddings,
+            includeValues: false,
+            includeMetadata: true
+        });
+
+        console.log('vectorSearch 2', queryResponse);
+        return { results: queryResponse.matches };
+    } 
+    catch (error) {
+        console.error('Error in vectorSearch:', error);
+        return { error: error.message };
+    }
+}
+
+
