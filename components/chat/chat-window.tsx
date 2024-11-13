@@ -32,6 +32,7 @@ export default function ChatWindow({ onClose }: ChatWindowProps) {
     const [messages, setMessages] = useState<Message[]>([])
     const [sessionId, setSessionId] = useState('')
     const [isLoading, setIsLoading] = useState(false)
+    const [awaitingAi, setAwaitingAi] = useState(false)
 
     useEffect(() => {
         // Generate a unique session ID when the chat window opens
@@ -86,7 +87,7 @@ export default function ChatWindow({ onClose }: ChatWindowProps) {
         if (!message.trim() || isLoading) return
 
         setIsLoading(true)
-        
+        setAwaitingAi(true)
         try {
             // USER MESSAGE
             const userMessage = {
@@ -108,13 +109,13 @@ export default function ChatWindow({ onClose }: ChatWindowProps) {
             console.log('aiResponse', aiResponse)
 
             // SYSTEM MESSAGE
+            setAwaitingAi(false)
             await addDoc(collection(db, 'chats'), {
                 content: aiResponse?.data || 'Sorry, I encountered an error processing your message. Please try again.',
                 isUser: false,
                 timestamp: serverTimestamp(),
                 sessionId                
             })
-
         } catch (error) {
             console.error('Error processing message:', error)
             setIsLoading(false)
@@ -165,6 +166,14 @@ export default function ChatWindow({ onClose }: ChatWindowProps) {
                         </div>
                     </div>
                 ))}
+
+                {awaitingAi? 
+                <div className="flex space-x-1" style={{padding:'1rem'}}>
+                    <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                    <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '200ms' }}></span>
+                    <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '400ms' }}></span>
+                </div>
+                :null}
             </div>
 
             {/* Input Area */}

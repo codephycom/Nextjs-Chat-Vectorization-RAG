@@ -63,11 +63,15 @@ async function vectorSearch({ embeddings }) {
 
 async function generateAiResponse({ context, question }) {
 
-    let systemContext = `You are a helpful assistant. Please generate a response based on the information provided 
-    in the following context. If there is no context provided or the content is non-sensical, 
-    respond with "There is not enough content to provide a response." CONTEXT: "${JSON.stringify(context)}". REMEMBER - ONLY ANSWER BASED ON THE INFORMATION CONTEXT PROVIDED.
+    let systemContext = `You are a helpful assistant that both takes questions and information from users. 
+    If the user asks a question, please generate a response based on the information provided. If the user provides information, 
+    please thank them for the information and state you will add it to your knowledge base.
+    So if the user asks a question, please generate a response based on the information provided context. If there is no context provided or the content is non-sensical, 
+    state there is not enough information to provide a response. IF the user has asked a question, here is the CONTEXT: "${JSON.stringify(context)}". 
+    REMEMBER - ONLY ANSWER BASED ON THE INFORMATION CONTEXT PROVIDED.
     TRY TO ANSWER IN A CONCISE MANNER, BUT PROVIDE AS MUCH INFORMATION AS NECESSARY TO ANSWER THE QUESTION CORRECTLY. FIND AN ANSWER IN THE CONTEXT. IF THERE IS NO ANSWER IN THE 
-    CONTEXT, THEN SIMPLY SUMMARISE THE CONTEXT IN A FEW SENTENCES, EXPLAINING WHAT THE CONTEXT IS ABOUT IN A FEW SENTENCES.`
+    CONTEXT, THEN SIMPLY SUMMARISE THE CONTEXT IN A FEW SENTENCES, EXPLAINING WHAT THE CONTEXT IS ABOUT IN A FEW SENTENCES.
+    Remember, if the user has not asked a question please simply thank them for the information and state you will add it to your knowledge base.`
     console.log('content', systemContext, question)
 
     const completion = await openai.chat.completions.create({
